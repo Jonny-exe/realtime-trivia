@@ -1,0 +1,31 @@
+{
+  "name": "web-go-js-template",
+  "version": "1.0.0",
+  "description": "This has:  - Golang server  - JS frontend",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "pretty-quick": "pretty-quick"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Jonny-exe/web-go-js-template.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Jonny-exe/web-go-js-template/issues"
+  },
+  "homepage": "https://github.com/Jonny-exe/web-go-js-template#readme",
+  "husky": {
+    "hooks": {
+      "pre-commit": "pretty-quick --staged"
+    }
+  },
+  "dependencies": {
+    "husky": "^5.0.9",
+    "prettier": "^2.2.1",
+    "pretty-quick": "^3.1.0"
+  }
+}
