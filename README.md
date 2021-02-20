@@ -1,5 +1,1 @@
-# This is a full  stack web page template
-
-This has:
- - Golang server
- - JS frontend
+# This is a realtime multiplayer trivia web page game
