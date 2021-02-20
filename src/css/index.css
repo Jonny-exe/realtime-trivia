@@ -12,3 +12,7 @@ h1 {
 div.setWord {
     display: none;
 }
+
+h1.playerType {
+    display: none;
+}
