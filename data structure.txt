@@ -6,6 +6,6 @@ room:
     public:
         questions: this is a question?
         answers: ["answer 1", "answer2"]
-        lider: my username
+        leader: my username
         question_count: 1
         question_timer: 15s
