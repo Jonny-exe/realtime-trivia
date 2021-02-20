@@ -75,10 +75,10 @@ export const startListening = () => {
                     index.setQuestion(questions[questionCount])
                 }
             })
-            index.handleAlert("hide")
+            // index.handleAlert("hide")
         } else {
+            // index.handleAlert("show")
             // TODO: maybe alert loading not sure yet
-            index.handleAlert("show")
         }
     })
 
