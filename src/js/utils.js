@@ -5,3 +5,7 @@ export function shuffle(a) {
     }
     return a;
 }
+
+export const $ = (query) => {
+    return document.querySelector(query)
+}

@@ -38,7 +38,6 @@ export const get = async (place) => {
 }
 
 export const handleTimer = async () => {
-    
     if (notLeader) return
     const dbPathTimer = "room/public/question_timer"
     const dbPathCount = "room/public/question_count"
@@ -48,10 +47,9 @@ export const handleTimer = async () => {
         if (questionCount >= 9) {
             setNewQuestions()
         } else {
-            questionCount = questionCount + 1
-            console.log(questionCount)
-            set(dbPathCount, questionCount)
-            set(dbPathTimer, 15)
+            set(dbPathCount, questionCount++)
+            // THis is actually 15 secs because it counts 5 s after it's set to 0
+            set(dbPathTimer, 10)
         }
         setTimeout(handleTimer, 5000)
         return
@@ -59,7 +57,7 @@ export const handleTimer = async () => {
     let newTime = currentTime == undefined ? 15 : currentTime - 5
     set(dbPathTimer, newTime)
     setTimeout(handleTimer, 5000)
-    
+
 }
 
 
@@ -76,9 +74,6 @@ export const startListening = () => {
                 }
             })
             // index.handleAlert("hide")
-        } else {
-            // index.handleAlert("show")
-            // TODO: maybe alert loading not sure yet
         }
     })
 
@@ -104,8 +99,8 @@ export const startListening = () => {
             if (!isLeader) {
                 return
             }
-
-            if (data['questions'] !== undefined) { // You have to do this like this becusae if questions is undefined you cant access length
+            // You have to do this like this becusae if questions is undefined you cant access length
+            if (data?.questions !== undefined) {
                 if (Object.keys(data['questions']).length <= data['questions_count']) {
                     await setNewQuestions()
                 }
@@ -116,7 +111,9 @@ export const startListening = () => {
     })
 
     db_leader.on("value", async snap => {
+        
         if (!snap.exists()) {
+            
             const dbPath = 'room/public/leader'
             db.ref(dbPath).set(index.user)
             db.ref(dbPath).onDisconnect().remove()
