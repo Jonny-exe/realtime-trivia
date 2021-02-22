@@ -19,7 +19,7 @@ const setNewQuestions = async () => {
 }
 
 export const handleTimer = async () => {
-    if (notLeader) return
+    if (notLeader || listeners.stopTimer) return
     const dbPathTimer = `room/${index.room}/question_timer`
     const dbPathCount = `room/${index.room}/question_count`
     const currentTime = await listeners.get(dbPathTimer)
@@ -44,6 +44,7 @@ export const handleTimer = async () => {
 
 class DbListeners {
     constructor(room = "public", firebase, user) {
+        this.stopTimer = false
         this.user = user
         this.room = room
 
@@ -76,7 +77,14 @@ class DbListeners {
 
 
     stopListening = () => {
+        this.stopTimer = true
         this.db.ref(`users/${this.room}/${this.user}`).remove()
+
+        
+        if (this.isLeader) {
+            this.db.ref(`room/${this.room}/leader`).remove()
+        }
+
         for (let i = 0; i < this.references.length; i++) {
             this.references[i].off("value");
         }
@@ -120,8 +128,8 @@ class DbListeners {
         this.db_room.on("value", async (snap) => {
             if (snap.exists()) {
                 const data = snap.val()
-                let isLeader = data[`leader`] == this.user
-                if (!isLeader) {
+                this.isLeader = data[`leader`] == this.user
+                if (!this.isLeader) {
                     return
                 }
                 // You have to do this like this becusae if questions is undefined you cant access length
