@@ -23,18 +23,18 @@ const selectRoom = () => {
     let oldRoom = room
     room = newRoom
 
+    $("#currentRoom").innerHTML = `You currently are in the room: ${newRoom}`
+
     if (db.listeners !== undefined) {
         db.listeners.stopListening()
     }
 
-
-    // db.listeners.remove(`users/${oldRoom}/${user}`)
-    // db.listeners.set(`users/${newRoom}/${user}`, { streak: 0, best_streak: 0, total_points: 0 })
     db.startListening(newRoom, user)
 }
 
 export const setUsers = (users) => {
     //TODO: order users by points
+    // use utils.mergeSort(arraToSort, sortBy)
     const usersTable = $("table.users")
     let usersHTML = ""
 
