@@ -27,6 +27,7 @@
 <body>
     <h1> Welcome to multiplayer trivia </h1>
     <div class="addUser">
+        <h2> Insert username: </h2>
         <div class="input-group mb-3">
             <input type="text" class="form-control addUser" placeholder="Username" aria-label="Recipient's username"
                 aria-describedby="button-addon2">
@@ -40,6 +41,15 @@
 
     <h2 id=usercount></h2>
     <table class="users table" border=1></table>
+
+    <div class="selectRoom">
+        <h2> Select custom room: </h2>
+        <div class="input-group mb-3">
+            <input type="text" class="form-control selectRoom" placeholder="Select custom room"
+                aria-label="Recipient's username" aria-describedby="button-addon2">
+            <button class="btn btn-outline-primary selectRoom" type="button"> Go </button>
+        </div>
+    </div>
 </body>
 <!-- Insert these scripts at the bottom of the HTML, but before you use any Firebase services -->
 <!-- Firebase App (the core Firebase SDK) is always required and must be listed first -->

@@ -16,3 +16,11 @@ div.setWord {
 h1.playerType {
     display: none;
 }
+
+h2 {
+    text-align: left;
+}
+
+div.selectRoom {
+    display: none;
+}

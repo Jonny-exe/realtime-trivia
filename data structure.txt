@@ -1,7 +1,9 @@
 users:
-    my username:
-        streak: 1
-        best_streak: 6
+    public:
+        my username:
+            streak: 1
+            best_streak: 6
+            total_points: 20
 room:
     public:
         questions: this is a question?

@@ -1,11 +1,12 @@
 import { shuffle, $ } from './utils.js'
-import { user } from './index.js'
+// import { user, room } from './index.js'
 import * as db from './db.js'
 class Answers {
-    constructor(question, document) {
+    constructor(question, document, user, room = "public") {
         this.document = document
+        this.user = user
+        this.room = room
         let { correctAnswer, shuffledAnswers } = this.prepareAnswers(question)
-        debugger
 
         let questions = this.createQuestion(question)
         let answers = this.createAnswers(shuffledAnswers)
@@ -15,7 +16,6 @@ class Answers {
 
     prepareAnswers = (question) => {
         let { correct_answer: correctAnswer, incorrect_answers: incorrectAnswers } = question
-        debugger
         let answers = []
         for (let i = 0; i < incorrectAnswers.length; i++) {
             answers[i] = incorrectAnswers[i]
@@ -74,11 +74,12 @@ class Answers {
             }
         }
 
-        const dbPath = `users/${user}`
-        let { streak, best_streak } = await db.get(dbPath)
+        const dbPath = `users/${this.room}/${this.user}`
+        let { streak, best_streak, total_points } = await db.listeners.get(dbPath)
 
         if (isCorrect) {
             streak++
+            total_points++
             if (streak >= best_streak) {
                 best_streak = streak
             }
@@ -86,9 +87,10 @@ class Answers {
             streak = 0
         }
 
-        db.set(dbPath, {
+        db.listeners.set(dbPath, {
             streak,
-            best_streak
+            best_streak,
+            total_points
         })
     }
 }
