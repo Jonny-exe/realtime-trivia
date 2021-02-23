@@ -8,8 +8,6 @@ firebase.initializeApp(env.firebaseConfig);
 let questionCount
 let notLeader = true
 
-
-//TODO: I don't like this name
 export let listeners
 
 const setNewQuestions = async () => {
@@ -56,7 +54,6 @@ class DbListeners {
         this.db_question_count = this.db.ref().child(`room/${room}/question_count`)
         this.db_questions = this.db.ref().child(`room/${room}/questions`)
 
-        // TODO: make this better, this is ugly
         this.references = [this.db_users, this.db_room, this.db_leader, this.db_question_count, this.db_questions]
 
         this.startListening()

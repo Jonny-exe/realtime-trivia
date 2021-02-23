@@ -24,3 +24,7 @@ h2 {
 div.selectRoom {
     display: none;
 }
+
+div.alertWrapper {
+    display: none;
+}

@@ -7,8 +7,13 @@ export let user = ""
 export let room = "public"
 
 const addUser = () => {
-    //TODO: make errro on duplicate and empty names: ""
     let username = $("input.addUser").value
+    if (username === "") {
+        handleAlert("show", "Name can't be empty")
+        return
+    } else {
+        handleAlert("hide", "")
+    }
     $("input.addUser").value = ""
     user = username
     $('div.addUser').style.display = "none"
@@ -33,8 +38,6 @@ const selectRoom = () => {
 }
 
 export const setUsers = (unorderedUsers) => {
-    //TODO: order users by points
-    // use utils.mergeSort(arraToSort, sortBy)
     const usersArray = objectToArray(unorderedUsers)
     const users = mergeSort(usersArray, "total_points")
     const usersTable = $("table.users")
@@ -42,7 +45,6 @@ export const setUsers = (unorderedUsers) => {
 
     for (let i = 0; i < users.length; i++) {
         const { total_points, streak, best_streak, name } = users[i]
-        debugger
         usersHTML += `<tr><td>${name}</td><td>${total_points}</td><td>${streak}</td><td>${best_streak}</td></tr>`
     }
     const baseHTML = '<thead><tr><td> Users </td><td> Points </td><td> Streak </td><td> Best streak </td></tr></thead>'
@@ -53,8 +55,9 @@ export const setUsers = (unorderedUsers) => {
 $("button.addUser").addEventListener("click", addUser)
 $("button.selectRoom").addEventListener("click", selectRoom)
 
-export const handleAlert = (action) => {
-    $("div.alertWrapper").style.display = action == show ? "inherit" : "none"
+export const handleAlert = (action, text) => {
+    $("#alert").innerHTML = text
+    $("div.alertWrapper").style.display = action == "show" ? "inherit" : "none"
 }
 
 export const setQuestion = (question, user, room) => {
