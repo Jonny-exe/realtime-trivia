@@ -75,7 +75,7 @@ class Answers {
         }
 
         const dbPath = `users/${this.room}/${this.user}`
-        let { streak, best_streak, total_points } = await db.listeners.get(dbPath)
+        let { streak, best_streak, total_points, name } = await db.listeners.get(dbPath)
 
         if (isCorrect) {
             streak++
@@ -90,7 +90,8 @@ class Answers {
         db.listeners.set(dbPath, {
             streak,
             best_streak,
-            total_points
+            total_points,
+            name
         })
     }
 }

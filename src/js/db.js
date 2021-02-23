@@ -94,7 +94,7 @@ class DbListeners {
 
 
         // this.set(`users/${newRoom}/${user}`, { streak: 0, best_streak: 0, total_points: 0 })
-        this.db.ref(`users/${this.room}/${this.user}`).set({ streak: 0, best_streak: 0, total_points: 0 })
+        this.db.ref(`users/${this.room}/${this.user}`).set({ streak: 0, best_streak: 0, total_points: 0, name: this.user })
         this.db.ref(`users/${this.room}/${this.user}`).onDisconnect().remove()
 
         this.db_question_count.on('value', async (snap) => {

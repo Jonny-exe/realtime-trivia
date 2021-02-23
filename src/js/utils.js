@@ -18,6 +18,7 @@ export function mergeSort(array, sortBy) {
     return array 
   }
   
+  
   const left = array.splice(0, half)
   return merge(mergeSort(left, sortBy),mergeSort(array, sortBy), sortBy)
 }
@@ -27,7 +28,7 @@ function merge(left, right, sortBy) {
     // Break out of loop if any one of the array gets empty
     while (left.length && right.length) {
         // Pick the smaller among the smallest element of left and right sub arrays 
-        if (left[0][sortBy] < right[0][sortBy]) {
+        if (left[0][sortBy] > right[0][sortBy]) {
             arr.push(left.shift())  
         } else {
             arr.push(right.shift()) 
@@ -37,4 +38,12 @@ function merge(left, right, sortBy) {
     // Concatenating the leftover elements
     // (in case we didn't go through the entire left or right array)
     return [ ...arr, ...left, ...right ]
+}
+
+export const objectToArray = (object) => {
+    let array = [] 
+    for (let key in object) {
+        array.push(object[key])
+    }
+    return array
 }

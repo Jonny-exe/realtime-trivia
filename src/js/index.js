@@ -1,5 +1,5 @@
 import * as db from "./db.js"
-import { $, shuffle } from "./utils.js"
+import { $, shuffle, mergeSort, objectToArray } from "./utils.js"
 import Answers from './answers.js'
 
 
@@ -32,15 +32,18 @@ const selectRoom = () => {
     db.startListening(newRoom, user)
 }
 
-export const setUsers = (users) => {
+export const setUsers = (unorderedUsers) => {
     //TODO: order users by points
     // use utils.mergeSort(arraToSort, sortBy)
+    const usersArray = objectToArray(unorderedUsers)
+    const users = mergeSort(usersArray, "total_points")
     const usersTable = $("table.users")
     let usersHTML = ""
 
-    for (let user in users) {
-        const { total_points, streak, best_streak } = users[user]
-        usersHTML += `<tr><td>${user}</td><td>${total_points}</td><td>${streak}</td><td>${best_streak}</td></tr>`
+    for (let i = 0; i < users.length; i++) {
+        const { total_points, streak, best_streak, name } = users[i]
+        debugger
+        usersHTML += `<tr><td>${name}</td><td>${total_points}</td><td>${streak}</td><td>${best_streak}</td></tr>`
     }
     const baseHTML = '<thead><tr><td> Users </td><td> Points </td><td> Streak </td><td> Best streak </td></tr></thead>'
     usersTable.innerHTML = baseHTML + usersHTML
