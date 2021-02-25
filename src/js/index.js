@@ -5,6 +5,7 @@ import Answers from './answers.js'
 
 export let user = ""
 export let room = "public"
+let usersOrder = "Points"
 
 const addUser = () => {
     let username = $("input.addUser").value
@@ -25,7 +26,6 @@ const addUser = () => {
 const selectRoom = () => {
     let newRoom = $("input.selectRoom").value
     $("input.selectRoom").value = ""
-    let oldRoom = room
     room = newRoom
 
     $("#currentRoom").innerHTML = `You currently are in the room: ${newRoom}`
@@ -37,18 +37,40 @@ const selectRoom = () => {
     db.startListening(newRoom, user)
 }
 
-export const setUsers = (unorderedUsers) => {
+export const setUsers = (unorderedUsers, orderer) => {
+    const orderBy = orderer ?? usersOrder
+
+    const categorysInDb = {
+        Users: "name",
+        Points: "total_points",
+        Streak: "streak",
+        "Best streak": "best_streak"
+    }
+
     const usersArray = objectToArray(unorderedUsers)
-    const users = mergeSort(usersArray, "total_points")
+    const users = mergeSort(usersArray, categorysInDb[orderBy])
     const usersTable = $("table.users")
     let usersHTML = ""
+
+    let tableHTML = ""
+    for (let category in categorysInDb) {
+        category = category == orderBy ? `<b> ${category} </b>` : category
+        tableHTML += `<td class="userCategory"> ${category} </td>`
+    }
 
     for (let i = 0; i < users.length; i++) {
         const { total_points, streak, best_streak, name } = users[i]
         usersHTML += `<tr><td>${name}</td><td>${total_points}</td><td>${streak}</td><td>${best_streak}</td></tr>`
     }
-    const baseHTML = '<thead><tr><td> Users </td><td> Points </td><td> Streak </td><td> Best streak </td></tr></thead>'
+
+    const baseHTML = `<thead>${tableHTML}</thead>`
     usersTable.innerHTML = baseHTML + usersHTML
+
+    const categorys = document.querySelectorAll(".userCategory")
+    for (let i = 0; i < categorys.length; i++) {
+        const category = categorys[i]
+        category.addEventListener("click", () => setUsers(unorderedUsers, category?.innerText))
+    }
 }
 
 
